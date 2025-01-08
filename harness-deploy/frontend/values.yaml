@@ -1,0 +1,10 @@
+name: <+service.name>
+replicas: 1
+image: <+artifact.image>
+dockercfg: <+artifact.imagePullSecret>
+namespace: <+infra.namespace>
+#createNamespace: "true"
+serviceType: ClusterIP
+servicePort: 80
+serviceTargetPort: 4000
+ingressSubDomain: <+project.identifier>

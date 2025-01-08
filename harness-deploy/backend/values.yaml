@@ -1,0 +1,16 @@
+name: <+service.name>
+replicas: 5
+image: <+artifact.image>
+dockercfg: <+artifact.imagePullSecret>
+namespace: <+infra.namespace>
+serviceType: ClusterIP
+servicePort: 80
+serviceTargetPort: 8000
+ingressSubDomain: <+project.identifier>
+env:
+  config:
+    APPLICATION_VERSION: v1.<+pipeline.sequenceId>
+    SERVICE_NAME: <+service.name>
+    LAST_EXECUTION_ID: <+pipeline.executionId>
+    HARNESS_BUILD: <+pipeline.sequenceId>
+    ARTIFACT_VERSION: <+artifact.image>

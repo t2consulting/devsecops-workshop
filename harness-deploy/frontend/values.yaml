@@ -6,5 +6,5 @@ namespace: <+infra.namespace>
 #createNamespace: "true"
 serviceType: ClusterIP
 servicePort: 80
-serviceTargetPort: 4000
+serviceTargetPort: 3000
 ingressSubDomain: <+variable.sandbox_id>

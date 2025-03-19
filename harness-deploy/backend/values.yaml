@@ -5,7 +5,8 @@ dockercfg: <+artifact.imagePullSecret>
 namespace: <+infra.namespace>
 serviceType: ClusterIP
 servicePort: 80
-serviceTargetPort: 8000
+serviceTargetPort: 5000
+serviceAccount: true
 ingressSubDomain: <+project.identifier>
 env:
   config:

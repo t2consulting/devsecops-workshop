@@ -1,13 +1,12 @@
-FROM python:3.11-slim
+FROM python:3.12-slim
 
-COPY . /app
 WORKDIR /app
 
-RUN python3 -m venv /opt/venv
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-RUN /opt/venv/bin/pip install pip --upgrade && \
-    /opt/venv/bin/pip install -r requirements.txt && \
-    chmod +x entrypoint.sh
+COPY app.py .
 
+EXPOSE 5000
 
-CMD ["/bin/sh","/app/entrypoint.sh"]
+CMD ["python", "app.py"]

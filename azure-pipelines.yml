@@ -1,0 +1,43 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.x'
+  displayName: 'Use Python 3.x'
+
+- script: |
+    python -m pip install --upgrade pip
+    pip install pytest
+  displayName: 'Install pytest'
+
+- script: |
+    cd ./python-tests
+    pytest
+  displayName: 'Run unit tests'
+
+- task: NodeTool@0
+  inputs:
+    versionSpec: '16.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    npm install
+    npm run build
+  displayName: 'NPM install and build'
+
+- task: Docker@2
+  inputs:
+    containerRegistry: 'google-artifact-registry-connection'
+    repository: 'us-central1-docker.pkg.dev/your-project-id/your-repo/your-image-name'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+    tags: |
+      latest
+      $(Build.BuildId)
+  displayName: 'Build and push Docker image'
+
